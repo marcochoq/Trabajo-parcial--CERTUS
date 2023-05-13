@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trabajo parcial - CERTUS</title>
+    <!-- Añadiendo CDN de CSS de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- Añadiendo jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-8 col-lg-6">
+            <h1 class="text-center mb-4">Formulario de Cliente</h1>
+            <form id="clienteForm">
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="apellido" class="form-label">Apellido:</label>
+                    <input type="text" class="form-control" id="apellido" name="apellido" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="correo" class="form-label">Correo electrónico:</label>
+                    <input type="email" class="form-control" id="correo" name="correo" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="genero" class="form-label">Género:</label>
+                    <select class="form-select" id="genero" name="genero" required>
+                        <option value="">Seleccione...</option>
+                        <option value="masculino">Masculino</option>
+                        <option value="femenino">Femenino</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="fecha" class="form-label">Fecha de nacimiento:</label>
+                    <input type="date" class="form-control" id="fecha" name="fecha" required>
+                </div>
+
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" onclick="confirmarEnvio()">Enviar</button>
+                </div>
+
+                <div id="error-message" class="mt-3 text-danger" style="display: none;">
+                    <strong>Por favor, complete todos los campos.</strong>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function confirmarEnvio() {
+            if (confirm("¿Desea enviar el formulario?")) {
+                enviarFormulario();
+            }
+        }
+
+        function enviarFormulario() {
+            var nombre = $('#nombre').val(); // Obtener el valor del campo "nombre"
+            var apellido = $('#apellido').val(); // Obtener el valor del campo "apellido"
+            var correo = $('#correo').val(); // Obtener el valor del campo "correo"
+            var genero = $('#genero').val(); // Obtener el valor del campo "genero"
+            var fecha = $('#fecha').val(); // Obtener el valor del campo "fecha"
+
+            if (nombre && apellido && correo && genero && fecha) {
+                var mensaje = "Nombre: " + nombre + "\n" +
+                    "Apellido: " + apellido + "\n" +
+                    "Correo electrónico: " + correo + "\n" +
+                    "Género: " + genero + "\n" +
+                    "Fecha de nacimiento: " + fecha;
+
+                alert(mensaje); // Mostrar un mensaje de alerta con los datos ingresados
+                $('#error-message').hide(); // Ocultar el mensaje de error
+            } else {
+                $('#error-message').show(); // Mostrar el mensaje de error si algún campo está vacío
+            }
+        }
+
+        $(document).ready(function () {
+            $('#clienteForm').submit(function (event) {
+                event.preventDefault(); // Prevenir el envío del formulario al presionar Enter
+
+                confirmarEnvio(); // Llamar a la función confirmarEnvio al enviar el formulario
+            });
+
+            // Agregar evento de escucha a los campos del formulario
+            $('#nombre, #apellido, #correo, #genero, #fecha').on('change input', function () {
+                if ($(this).val()) {
+                    $('#error-message').hide(); // Ocultar el mensaje de error si se ingresa un valor en el campo
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
